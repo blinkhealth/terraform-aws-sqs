@@ -63,7 +63,7 @@ data "aws_iam_policy_document" "this" {
 
   # allow writers to SendMessage and manage messages in the queue
   dynamic "statement" {
-    for_each = var.allow_read_arns != [] ? [true] : []
+    for_each = length(var.allow_write_arns) > 0 ? [true] : []
     content {
       sid = "Write"
       actions = [
@@ -82,5 +82,5 @@ data "aws_iam_policy_document" "this" {
 
 locals {
   # an iam policy doc with an empty `statement` means var.allow_*_arns were empty
-  policy_doc_is_valid = length(data.aws_iam_policy_document.this.statement) > 0
+  policy_doc_is_valid = data.aws_iam_policy_document.this.statement != null
 }
