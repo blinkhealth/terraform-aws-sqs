@@ -28,6 +28,18 @@ variable "allow_write_arns" {
   default     = []
 }
 
+variable "redrive_max_receive_count" {
+  description = "The redrive policy's maxReceiveCount.  Requires variable `redrive_dlq_target_arn` to be set."
+  type        = number
+  default     = 5
+}
+
+variable "redrive_dlq_target_arn" {
+  description = "The redrive policy's deadLetterTargetArn.  Setting this enables the redrive policy."
+  type        = string
+  default     = null
+}
+
 variable "visibility_timeout_seconds" {
   description = "The visibility timeout for the queue. An integer from 0 to 43200 (12 hours)"
   type        = number
