@@ -16,6 +16,18 @@ variable "name_prefix" {
   default     = null
 }
 
+variable "allow_read_arns" {
+  description = "Allow these IAM users/roles to read messages in the queue.  Overrides the `policy` variable."
+  type        = list(string)
+  default     = []
+}
+
+variable "allow_write_arns" {
+  description = "Allow these IAM users/roles to create and manage messages in the queue.  Overrides the `policy` variable."
+  type        = list(string)
+  default     = []
+}
+
 variable "visibility_timeout_seconds" {
   description = "The visibility timeout for the queue. An integer from 0 to 43200 (12 hours)"
   type        = number
