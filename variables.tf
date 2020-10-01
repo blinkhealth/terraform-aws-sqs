@@ -35,7 +35,7 @@ variable "redrive_max_receive_count" {
 }
 
 variable "redrive_dlq_target_arn" {
-  description = "The redrive policy's deadLetterTargetArn.  Setting this enables the redrive policy.  Not used when `redrive_policy` is specified."
+  description = "The redrive policy's deadLetterTargetArn.  Setting this will create a redrive policy.  Not used when `redrive_policy` is specified."
   type        = string
   default     = null
 }
