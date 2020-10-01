@@ -74,7 +74,7 @@ No requirements.
 | message\_retention\_seconds | The number of seconds Amazon SQS retains a message. Integer representing seconds, from 60 (1 minute) to 1209600 (14 days) | `number` | `345600` | no |
 | name | This is the human-readable name of the queue. If omitted, Terraform will assign a random name. | `string` | `null` | no |
 | name\_prefix | A unique name beginning with the specified prefix. | `string` | `null` | no |
-| policy | The JSON policy for the SQS queue | `string` | `""` | no |
+| policy | The JSON policy for the SQS queue | `string` | `null` | no |
 | receive\_wait\_time\_seconds | The time for which a ReceiveMessage call will wait for a message to arrive (long polling) before returning. An integer from 0 to 20 (seconds) | `number` | `0` | no |
 | redrive\_policy | The JSON policy to set up the Dead Letter Queue, see AWS docs. Note: when specifying maxReceiveCount, you must specify it as an integer (5), and not a string ("5") | `string` | `""` | no |
 | sns\_topic\_subscription\_arn | Subscribe the queue to this SNS topic | `string` | `""` | no |

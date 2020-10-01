@@ -61,7 +61,7 @@ variable "receive_wait_time_seconds" {
 variable "policy" {
   description = "The JSON policy for the SQS queue"
   type        = string
-  default     = ""
+  default     = null
 }
 
 variable "redrive_policy" {
