@@ -17,13 +17,13 @@ variable "name_prefix" {
 }
 
 variable "allow_read_arns" {
-  description = "Allow these IAM users/roles to read messages in the queue.  Overrides the `policy` variable."
+  description = "Allow these IAM users/roles to read messages in the queue.  Not used when `policy` is specified."
   type        = list(string)
   default     = []
 }
 
 variable "allow_write_arns" {
-  description = "Allow these IAM users/roles to create and manage messages in the queue.  Overrides the `policy` variable."
+  description = "Allow these IAM users/roles to create and manage messages in the queue.  Not used when `policy` is specified."
   type        = list(string)
   default     = []
 }

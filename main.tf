@@ -9,7 +9,7 @@ resource "aws_sqs_queue" "this" {
   max_message_size            = var.max_message_size
   delay_seconds               = var.delay_seconds
   receive_wait_time_seconds   = var.receive_wait_time_seconds
-  policy                      = local.policy_doc_is_valid ? data.aws_iam_policy_document.this.json : var.policy
+  policy                      = local.use_policy_doc ? data.aws_iam_policy_document.this.json : var.policy
   redrive_policy              = var.redrive_policy
   fifo_queue                  = var.fifo_queue
   content_based_deduplication = var.content_based_deduplication
@@ -83,4 +83,7 @@ data "aws_iam_policy_document" "this" {
 locals {
   # an iam policy doc with an empty `statement` means var.allow_*_arns were empty
   policy_doc_is_valid = data.aws_iam_policy_document.this.statement != null
+
+  # we only want to use our policy doc if it's valid and var.policy is null
+  use_policy_doc = local.policy_doc_is_valid && var.policy == null
 }
