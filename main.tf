@@ -76,6 +76,7 @@ data "aws_iam_policy_document" "this" {
         type        = "AWS"
         identifiers = var.allow_write_arns
       }
+      resources = ["*"]
     }
   }
 }
