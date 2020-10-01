@@ -74,7 +74,7 @@ No requirements.
 | message\_retention\_seconds | The number of seconds Amazon SQS retains a message. Integer representing seconds, from 60 (1 minute) to 1209600 (14 days) | `number` | `345600` | no |
 | name | This is the human-readable name of the queue. If omitted, Terraform will assign a random name. | `string` | `null` | no |
 | name\_prefix | A unique name beginning with the specified prefix. | `string` | `null` | no |
-| policy | The JSON policy for the SQS queue | `string` | `""` | no |
+| policy | The JSON policy for the SQS queue | `string` | `null` | no |
 | receive\_wait\_time\_seconds | The time for which a ReceiveMessage call will wait for a message to arrive (long polling) before returning. An integer from 0 to 20 (seconds) | `number` | `0` | no |
 | redrive\_dlq\_target\_arn | The redrive policy's deadLetterTargetArn.  Setting this will create a redrive policy.  Not used when `redrive_policy` is specified. | `string` | `null` | no |
 | redrive\_max\_receive\_count | The redrive policy's maxReceiveCount.  Requires variable `redrive_dlq_target_arn` to be set.  Not used when `redrive_policy` is specified. | `number` | `5` | no |
