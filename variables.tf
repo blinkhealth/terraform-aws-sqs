@@ -70,6 +70,12 @@ variable "redrive_policy" {
   default     = ""
 }
 
+variable sns_topic_subscription_arn {
+  description = "Subscribe the queue to this SNS topic"
+  type        = string
+  default     = ""
+}
+
 variable "fifo_queue" {
   description = "Boolean designating a FIFO queue"
   type        = bool

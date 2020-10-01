@@ -79,6 +79,25 @@ data "aws_iam_policy_document" "this" {
       resources = ["*"]
     }
   }
+
+  # allow SNS topic to SendMessage to the quee
+  dynamic "statement" {
+    for_each = length(var.sns_topic_subscription_arn) > 0 ? [true] : []
+    content {
+      sid     = "SNS-subscription"
+      actions = ["sqs:SendMessage"]
+      principals {
+        type        = "AWS"
+        identifiers = ["*"]
+      }
+      resources = ["*"]
+      condition {
+        test     = "ArnLike"
+        variable = "aws:SourceArn"
+        values   = [var.sns_topic_subscription_arn]
+      }
+    }
+  }
 }
 
 locals {
@@ -87,4 +106,11 @@ locals {
 
   # we only want to use our policy doc if it's valid and var.policy is null
   use_policy_doc = local.policy_doc_is_valid && var.policy == null
+}
+
+resource aws_sns_topic_subscription this {
+  count     = (var.create && length(var.sns_topic_subscription_arn) > 0) ? 1 : 0
+  topic_arn = var.sns_topic_subscription_arn
+  protocol  = "sqs"
+  endpoint  = aws_sqs_queue.this[0].arn
 }
