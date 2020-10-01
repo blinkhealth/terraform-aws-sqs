@@ -3,7 +3,11 @@ locals {
     deadLetterTargetArn = var.redrive_dlq_target_arn
     maxReceiveCount     = var.redrive_max_receive_count
   }
+
   redrive_policy_is_valid = local.redrive_policy.deadLetterTargetArn != null
+
+  # use the local redrive policy if it's valid and var.redrive_policy is empty
+  use_local_redrive_policy = local.redrive_policy_is_valid && length(var.redrive_policy) == 0
 }
 
 resource "aws_sqs_queue" "this" {
@@ -18,7 +22,7 @@ resource "aws_sqs_queue" "this" {
   delay_seconds               = var.delay_seconds
   receive_wait_time_seconds   = var.receive_wait_time_seconds
   policy                      = local.use_policy_doc ? data.aws_iam_policy_document.this[0].json : var.policy
-  redrive_policy              = local.redrive_policy_is_valid ? jsonencode(local.redrive_policy) : null
+  redrive_policy              = local.use_local_redrive_policy ? jsonencode(local.redrive_policy) : var.redrive_policy
   fifo_queue                  = var.fifo_queue
   content_based_deduplication = var.content_based_deduplication
 

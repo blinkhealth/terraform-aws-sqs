@@ -76,8 +76,8 @@ No requirements.
 | name\_prefix | A unique name beginning with the specified prefix. | `string` | `null` | no |
 | policy | The JSON policy for the SQS queue | `string` | `""` | no |
 | receive\_wait\_time\_seconds | The time for which a ReceiveMessage call will wait for a message to arrive (long polling) before returning. An integer from 0 to 20 (seconds) | `number` | `0` | no |
-| redrive\_dlq\_target\_arn | The redrive policy's deadLetterTargetArn.  Setting this enables the redrive policy. | `string` | `null` | no |
-| redrive\_max\_receive\_count | The redrive policy's maxReceiveCount.  Requires variable `redrive_dlq_target_arn` to be set. | `number` | `5` | no |
+| redrive\_dlq\_target\_arn | The redrive policy's deadLetterTargetArn.  Setting this enables the redrive policy.  Not used when `redrive_policy` is specified. | `string` | `null` | no |
+| redrive\_max\_receive\_count | The redrive policy's maxReceiveCount.  Requires variable `redrive_dlq_target_arn` to be set.  Not used when `redrive_policy` is specified. | `number` | `5` | no |
 | redrive\_policy | The JSON policy to set up the Dead Letter Queue, see AWS docs. Note: when specifying maxReceiveCount, you must specify it as an integer (5), and not a string ("5") | `string` | `""` | no |
 | sns\_topic\_subscription\_arn | Subscribe the queue to this SNS topic | `string` | `""` | no |
 | tags | A mapping of tags to assign to all resources | `map(string)` | `{}` | no |

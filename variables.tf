@@ -29,13 +29,13 @@ variable "allow_write_arns" {
 }
 
 variable "redrive_max_receive_count" {
-  description = "The redrive policy's maxReceiveCount.  Requires variable `redrive_dlq_target_arn` to be set."
+  description = "The redrive policy's maxReceiveCount.  Requires variable `redrive_dlq_target_arn` to be set.  Not used when `redrive_policy` is specified."
   type        = number
   default     = 5
 }
 
 variable "redrive_dlq_target_arn" {
-  description = "The redrive policy's deadLetterTargetArn.  Setting this enables the redrive policy."
+  description = "The redrive policy's deadLetterTargetArn.  Setting this enables the redrive policy.  Not used when `redrive_policy` is specified."
   type        = string
   default     = null
 }
