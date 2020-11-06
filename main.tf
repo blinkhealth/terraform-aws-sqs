@@ -45,7 +45,7 @@ data "aws_iam_policy_document" "this" {
 
   # both readers and writers are allowed to read metadata
   dynamic "statement" {
-    for_each = length(var.allow_read_arns) > 0 || length(var.allow_write_arns) < 0 ? [true] : []
+    for_each = length(var.allow_read_iam_arns) > 0 || length(var.allow_write_iam_arns) > 0 ? [true] : []
     content {
       sid = "Metadata"
       actions = [
@@ -55,7 +55,7 @@ data "aws_iam_policy_document" "this" {
       ]
       principals {
         type        = "AWS"
-        identifiers = setunion(var.allow_read_arns, var.allow_write_arns)
+        identifiers = setunion(var.allow_read_iam_arns, var.allow_write_iam_arns)
       }
       # in a queue policy a "*" means "this queue"
       resources = ["*"]
@@ -64,13 +64,13 @@ data "aws_iam_policy_document" "this" {
 
   # allow readers to ReceiveMessage
   dynamic "statement" {
-    for_each = length(var.allow_read_arns) > 0 ? [true] : []
+    for_each = length(var.allow_read_iam_arns) > 0 ? [true] : []
     content {
       sid     = "Read"
       actions = ["sqs:ReceiveMessage"]
       principals {
         type        = "AWS"
-        identifiers = var.allow_read_arns
+        identifiers = var.allow_read_iam_arns
       }
       resources = ["*"]
     }
@@ -78,7 +78,7 @@ data "aws_iam_policy_document" "this" {
 
   # allow writers to SendMessage and manage messages in the queue
   dynamic "statement" {
-    for_each = length(var.allow_write_arns) > 0 ? [true] : []
+    for_each = length(var.allow_write_iam_arns) > 0 ? [true] : []
     content {
       sid = "Write"
       actions = [
@@ -89,17 +89,17 @@ data "aws_iam_policy_document" "this" {
       ]
       principals {
         type        = "AWS"
-        identifiers = var.allow_write_arns
+        identifiers = var.allow_write_iam_arns
       }
       resources = ["*"]
     }
   }
 
-  # allow SNS topic to SendMessage to the quee
+  # allow SNS and EventBridge to SendMessage to the quee
   dynamic "statement" {
-    for_each = length(var.sns_topic_subscription_arn) > 0 ? [true] : []
+    for_each = length(var.sns_topic_subscription_arn) > 0 || length(var.allow_write_eventbridge_rules) > 0 ? [true] : []
     content {
-      sid     = "SNS-subscription"
+      sid     = "services-write"
       actions = ["sqs:SendMessage"]
       principals {
         type        = "AWS"
@@ -109,7 +109,12 @@ data "aws_iam_policy_document" "this" {
       condition {
         test     = "ArnLike"
         variable = "aws:SourceArn"
-        values   = [var.sns_topic_subscription_arn]
+        values = compact(
+          concat(
+            [var.sns_topic_subscription_arn],
+            var.allow_write_eventbridge_rules
+          )
+        )
       }
     }
   }
