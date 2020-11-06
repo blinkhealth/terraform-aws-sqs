@@ -16,14 +16,20 @@ variable "name_prefix" {
   default     = null
 }
 
-variable "allow_read_arns" {
+variable "allow_read_iam_arns" {
   description = "Allow these IAM users/roles to read messages in the queue.  Not used when `policy` is specified."
   type        = list(string)
   default     = []
 }
 
-variable "allow_write_arns" {
+variable "allow_write_iam_arns" {
   description = "Allow these IAM users/roles to create and manage messages in the queue.  Not used when `policy` is specified."
+  type        = list(string)
+  default     = []
+}
+
+variable "allow_write_eventbridge_rules" {
+  description = "Allow these EventBridge rule ARNs to create messages in the queue.  Not used when `policy` is specified."
   type        = list(string)
   default     = []
 }
