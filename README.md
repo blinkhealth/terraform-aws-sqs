@@ -62,8 +62,9 @@ No requirements.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| allow\_read\_arns | Allow these IAM users/roles to read messages in the queue.  Not used when `policy` is specified. | `list(string)` | `[]` | no |
-| allow\_write\_arns | Allow these IAM users/roles to create and manage messages in the queue.  Not used when `policy` is specified. | `list(string)` | `[]` | no |
+| allow\_read\_iam\_arns | Allow these IAM users/roles to read messages in the queue.  Not used when `policy` is specified. | `list(string)` | `[]` | no |
+| allow\_write\_eventbridge\_rules | Allow these EventBridge rule ARNs to create messages in the queue.  Not used when `policy` is specified. | `list(string)` | `[]` | no |
+| allow\_write\_iam\_arns | Allow these IAM users/roles to create and manage messages in the queue.  Not used when `policy` is specified. | `list(string)` | `[]` | no |
 | content\_based\_deduplication | Enables content-based deduplication for FIFO queues | `bool` | `false` | no |
 | create | Whether to create SQS queue | `bool` | `true` | no |
 | delay\_seconds | The time in seconds that the delivery of all messages in the queue will be delayed. An integer from 0 to 900 (15 minutes) | `number` | `0` | no |
