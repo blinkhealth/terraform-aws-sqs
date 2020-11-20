@@ -63,7 +63,7 @@ No requirements.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | allow\_read\_iam\_arns | Allow these IAM users/roles to read messages in the queue.  Not used when `policy` is specified. | `list(string)` | `[]` | no |
-| allow\_write\_eventbridge\_rules | Allow these EventBridge rule ARNs to create messages in the queue.  Not used when `policy` is specified. | `list(string)` | `[]` | no |
+| allow\_write\_cloudwatch\_events\_rules | Allow these CloudWatch Events rule ARNs to create messages in the queue.  Not used when `policy` is specified. | `list(string)` | `[]` | no |
 | allow\_write\_iam\_arns | Allow these IAM users/roles to create and manage messages in the queue.  Not used when `policy` is specified. | `list(string)` | `[]` | no |
 | content\_based\_deduplication | Enables content-based deduplication for FIFO queues | `bool` | `false` | no |
 | create | Whether to create SQS queue | `bool` | `true` | no |

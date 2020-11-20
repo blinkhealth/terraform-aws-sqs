@@ -28,8 +28,8 @@ variable "allow_write_iam_arns" {
   default     = []
 }
 
-variable "allow_write_eventbridge_rules" {
-  description = "Allow these EventBridge rule ARNs to create messages in the queue.  Not used when `policy` is specified."
+variable "allow_write_cloudwatch_events_rules" {
+  description = "Allow these CloudWatch Events rule ARNs to create messages in the queue.  Not used when `policy` is specified."
   type        = list(string)
   default     = []
 }

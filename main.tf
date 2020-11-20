@@ -95,9 +95,9 @@ data "aws_iam_policy_document" "this" {
     }
   }
 
-  # allow SNS and EventBridge to SendMessage to the quee
+  # allow SNS and CloudWatch Events to SendMessage to the quee
   dynamic "statement" {
-    for_each = length(var.sns_topic_subscription_arn) > 0 || length(var.allow_write_eventbridge_rules) > 0 ? [true] : []
+    for_each = length(var.sns_topic_subscription_arn) > 0 || length(var.allow_write_cloudwatch_events_rules) > 0 ? [true] : []
     content {
       sid     = "services-write"
       actions = ["sqs:SendMessage"]
@@ -112,7 +112,7 @@ data "aws_iam_policy_document" "this" {
         values = compact(
           concat(
             [var.sns_topic_subscription_arn],
-            var.allow_write_eventbridge_rules
+            var.allow_write_cloudwatch_events_rules
           )
         )
       }
